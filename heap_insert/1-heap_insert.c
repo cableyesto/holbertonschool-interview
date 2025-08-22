@@ -4,6 +4,7 @@
 
 /**
  * get_insertion_parent - Finds the first node missing a child (BFS)
+ * @root: pointer to the root node
  * Return: Parent node where the new node should be inserted
  */
 heap_t *get_insertion_parent(heap_t *root)
