@@ -3,51 +3,29 @@
 #include <stdio.h>
 
 /**
- * is_sandpile_stable - Function to sum to square matrixes
- * @grid: square matrix 3x3
- * Return: integer 0 if grid is not stable and 1 otherwise
+ * is_sandpile_stable - Function to check if a sandpile is stable.
+ * @grid: square matrix 3x3.
+ *
+ * Return: 0 if grid is not stable, 1 if it is stable.
  */
 int is_sandpile_stable(int grid[3][3])
 {
 	int i, j;
+
 	for (i = 0; i < 3; i++)
 	{
-	  for (j = 0; j < 3; j++)
-	  {
-	    if (grid[i][j] > 3)
-	    {
-	      return (0);
-      }
-    }
-  }
+		for (j = 0; j < 3; j++)
+		{
+			if (grid[i][j] > 3)
+				return (0);
+		}
+	}
 	return (1);
 }
 
-
-
 /**
- * print_grid - Print 3x3 grid
- * @grid: 3x3 grid
- */
-static void print_grid(int grid[3][3])
-{
-	int i, j;
-
-	for (i = 0; i < 3; i++)
-	{
-	  for (j = 0; j < 3; j++)
-	  {
-	    if (j)
-		    printf(" ");
-	    printf("%d", grid[i][j]);
-    }
-	  printf("\n");
-  }
-}
-
-/**
- * sandpile_toppling - Toppling Function
- * @grid: 3x3 grid
+ * sandpile_toppling - Perform one toppling round on a 3x3 grid.
+ * @grid: 3x3 grid.
  */
 void sandpile_toppling(int grid[3][3])
 {
@@ -60,77 +38,92 @@ void sandpile_toppling(int grid[3][3])
 		{0, -1}   /* left */
 	};
 
-	/* Copy the current grid to temp */
-	for (i = 0; i < 3; i++)
+	for (i = 0; i < 3; i++) /* Copy the current grid to temp */
 	{
-	  for (j = 0; j < 3; j++)
-	  {
-	    temp[i][j] = grid[i][j];
-    }
-  }
-
-	/* Topple unstable cells */
-	for (i = 0; i < 3; i++)
-	{
-	  for (j = 0; j < 3; j++)
-	  {
-	    if (grid[i][j] > 3)
-	    {
-	      temp[i][j] -= 4;
-
-	      for (d = 0; d < 4; d++)
-	      {
-		int ni = i + directions[d][0];
-		int nj = j + directions[d][1];
-
-		if (ni >= 0 && ni < 3 && nj >= 0 && nj < 3)
-			temp[ni][nj] += 1;
+		for (j = 0; j < 3; j++)
+			temp[i][j] = grid[i][j];
 	}
-      }
-    }
-  }
 
-	/* Copy temp back into original grid */
-	for (i = 0; i < 3; i++)
+	for (i = 0; i < 3; i++) /* Topple unstable cells */
 	{
-	  for (j = 0; j < 3; j++)
-	  {
-	    grid[i][j] = temp[i][j];
-    }
-  }
+		for (j = 0; j < 3; j++)
+		{
+			if (grid[i][j] > 3)
+			{
+				temp[i][j] -= 4;
+
+				for (d = 0; d < 4; d++)
+				{
+					int ni = i + directions[d][0];
+					int nj = j + directions[d][1];
+
+					if (ni >= 0 && ni < 3 && nj >= 0 && nj < 3)
+						temp[ni][nj] += 1;
+				}
+			}
+		}
+	}
+
+	for (i = 0; i < 3; i++) /* Copy temp back into original grid */
+	{
+		for (j = 0; j < 3; j++)
+			grid[i][j] = temp[i][j];
+	}
 }
 
 /**
- * sandpiles_sum - Function to sum to square matrixes
- * @grid1: first square matrix 3x3
- * @grid2: second square matrix 3x3
+ * print_grid - Print 3x3 grid.
+ * @grid: 3x3 grid.
+ */
+static void print_grid(int grid[3][3])
+{
+	int i, j;
+
+	for (i = 0; i < 3; i++)
+	{
+		for (j = 0; j < 3; j++)
+		{
+			if (j)
+				printf(" ");
+			printf("%d", grid[i][j]);
+		}
+		printf("\n");
+	}
+}
+
+/**
+ * sandpiles_sum - Function to sum two square matrices and perform toppling.
+ * @grid1: first 3x3 matrix.
+ * @grid2: second 3x3 matrix.
  */
 void sandpiles_sum(int grid1[3][3], int grid2[3][3])
 {
 	int i, j;
 
-	/* Print the result of the sum of the sandpiles */
+	/* Add grid2 to grid1 */
 	for (i = 0; i < 3; i++)
 	{
-	  for (j = 0; j < 3; j++)
-	  {
-	    grid1[i][j] = grid1[i][j] + grid2[i][j];
-    }
-  }
+		for (j = 0; j < 3; j++)
+			grid1[i][j] += grid2[i][j];
+	}
 
-	if (is_sandpile_stable(grid1) != 1)
+	/* Print the result of the sum if unstable */
+	if (!is_sandpile_stable(grid1))
 	{
-	  printf("=\n");
-	  print_grid(grid1);
-  }
+		printf("=\n");
+		print_grid(grid1);
+	}
 
-	while (is_sandpile_stable(grid1) != 1)
+	/* Keep toppling until the grid is stable */
+	while (!is_sandpile_stable(grid1))
 	{
-	  sandpile_toppling(grid1);
-	  if (is_sandpile_stable(grid1) != 1)
-	  {
-	    printf("=\n");
-	    print_grid(grid1);
-    }
-  }
+		sandpile_toppling(grid1);
+
+		/* Print grid after each toppling if still unstable */
+		if (!is_sandpile_stable(grid1))
+		{
+			printf("=\n");
+			print_grid(grid1);
+		}
+	}
 }
