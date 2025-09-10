@@ -1,52 +1,64 @@
-#include <stdlib.h>
-#include "lists.h"
 #include <stdio.h>
+#include "lists.h"
+#include <stdlib.h>
 
 /**
- * is_sandpile_palindrome - Function to check if a sandpile is stable.
- * @head: pointer to pointer of first node of listint_t list
+ * reverse_list - Reverses a linked list.
+ * @head: A pointer to the head of the linked list.
  *
- * Return: 0 if it is not a palindrome, 1 if it is a palindrome
+ * Return: The new head of the reversed list.
+ */
+listint_t *reverse_list(listint_t *head)
+{
+	listint_t *prev = NULL, *current = head, *next = NULL;
+
+	while (current != NULL)
+	{
+		next = current->next;
+		current->next = prev;
+		prev = current;
+		current = next;
+	}
+
+	return (prev);
+}
+
+/**
+ * is_palindrome - Checks if a singly linked list is a palindrome.
+ * @head: A pointer to the head of the linked list.
+ *
+ * Return: 1 if the list is a palindrome, 0 otherwise.
  */
 int is_palindrome(listint_t **head)
 {
-	unsigned int n;
-	const listint_t *current_start;
-	const listint_t *current_end;
-	int value_1, value_2;
-	int idx;
+	listint_t *slow = *head, *fast = *head, *second_half, *first_half;
 
-	current_start = *head;
-	current_end = *head;
-	n = 0;
-	idx = 0;
-
-	while (current_end != NULL)
+	if (*head == NULL || (*head)->next == NULL)
 	{
-		current_end = current_end->next;
-		n++;
+		return (1); /* Empty or single element list is a palindrome. */
 	}
-	if (n == 0)
-		return (1);
-	/*
-	 *Traverse through the first half,
-	 *check corresponding values from the other half
-	*/
-	while (current_start != NULL)
+
+	/* Use the fast and slow pointer technique to find the middle. */
+	while (fast != NULL && fast->next != NULL)
 	{
-		/* Find the corresponding node from the end */
-		current_end = *head;
-		for (int i = 0; i < ((int)n - idx - 1); i++)
-			current_end = current_end->next;
+		slow = slow->next;
+		fast = fast->next->next;
+	}
 
-		value_1 = current_start->n;
-		value_2 = current_end->n;
+	/* Reverse the second half of the list. */
+	second_half = reverse_list(slow);
+	first_half = *head;
 
-		if (value_1 != value_2)
+	/* Compare the first half and the reversed second half. */
+	while (second_half != NULL)
+	{
+		if (first_half->n != second_half->n)
+		{
 			return (0);
+		}
 
-		current_start = current_start->next;
-		idx++;
+		first_half = first_half->next;
+		second_half = second_half->next;
 	}
 
 	return (1);
