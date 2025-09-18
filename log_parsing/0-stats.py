@@ -30,8 +30,8 @@ def main():
         for line in sys.stdin:
             line = line.strip()
             match = log_pattern.match(line)
-            if not match:
-                continue  # Skip invalid lines
+            # if not match:
+            #    continue  # Skip invalid lines
 
             status_code = int(match.group(1))
             file_size = int(match.group(2))
