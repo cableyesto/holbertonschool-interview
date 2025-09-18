@@ -49,9 +49,8 @@ def main():
         print_result(total_size, status_codes)
         raise
 
-    # After loop, if remaining valid lines didn't
-    # hit a multiple of 10, print one last time
-    if valid_line_count % 10 != 0:
+    # Always print final result — even if no valid lines
+    if valid_line_count % 10 != 0 or valid_line_count == 0:
         print_result(total_size, status_codes)
 
 
