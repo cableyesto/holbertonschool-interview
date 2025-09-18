@@ -7,6 +7,7 @@ import re
 
 
 def print_result(size, status_codes):
+    """Documentation of the print function"""
     print("File size: {}".format(size))
     for key, value in status_codes.items():
         print("{}: {}".format(key, value))
