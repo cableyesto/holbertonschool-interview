@@ -8,7 +8,8 @@ def print_result(size, status_codes):
     """Documentation of the print function"""
     print("File size: {}".format(size))
     for key, value in status_codes.items():
-        print("{}: {}".format(key, value))
+        if (value != 0):
+            print("{}: {}".format(key, value))
 
 
 def main():
@@ -54,6 +55,7 @@ def main():
         print_result(size, status_codes)
     except Exception as e:
         print("An error occured: {}".format(e))
+
 
 if __name__ == "__main__":
     main()
