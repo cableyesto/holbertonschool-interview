@@ -17,9 +17,9 @@ def main():
     status_codes_list = [200, 301, 400, 401, 403, 404, 405, 500]
     status_codes = {code: 0 for code in status_codes_list}
     total_size = 0
-    valid_lines = []
+    valid_line_count = 0
 
-    # Strict log format regex
+    # Strict log line format
     log_pattern = re.compile(
         r'^\d{1,3}(?:\.\d{1,3}){3} - \['
         r'\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\.\d+'
@@ -31,7 +31,7 @@ def main():
             line = line.strip()
             match = log_pattern.match(line)
             if not match:
-                continue  # Skip malformed lines
+                continue  # Skip invalid lines
 
             status_code = int(match.group(1))
             file_size = int(match.group(2))
@@ -40,21 +40,18 @@ def main():
             if status_code in status_codes:
                 status_codes[status_code] += 1
 
-            valid_lines.append(1)
+            valid_line_count += 1
 
-            if len(valid_lines) == 1:
-                # If it's the first line, don't print yet
-                continue
-
-            if len(valid_lines) % 10 == 0:
+            if valid_line_count % 10 == 0:
                 print_result(total_size, status_codes)
 
     except KeyboardInterrupt:
-        # Optional: graceful shutdown
-        pass
+        print_result(total_size, status_codes)
+        raise
 
-    # Final decision: only one valid line? Print it
-    if len(valid_lines) == 1:
+    # After loop, if remaining valid lines didn't
+    # hit a multiple of 10, print one last time
+    if valid_line_count % 10 != 0:
         print_result(total_size, status_codes)
 
 
