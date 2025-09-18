@@ -43,11 +43,8 @@ def main():
                     status_codes[current_status] += 1
 
                 i += 1
-                print_result(size, status_codes)
 
                 if (i == 9):
-                    size = 0
-                    status_codes = status_codes_init.copy()
                     i = 0
                     print_result(size, status_codes)
 
