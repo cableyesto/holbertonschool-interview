@@ -26,11 +26,9 @@ def main():
             # Find the status code in the line
             pattern_status = r'(\d{3}) \d+'
             match_status = re.search(pattern_status, line)
-            status_code = int(match_status.group(1))
-
-            if not status_code:
+            if not match_status:
                 continue
-
+            status_code = int(match_status.group(1))
 
             # Find the size in the line
             pattern_size = r'\d{3} (\d+)'
