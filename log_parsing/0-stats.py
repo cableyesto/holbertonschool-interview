@@ -28,11 +28,12 @@ def main():
             match_status = re.search(pattern_status, line)
             if not match_status:
                 print(line)
-                # pattern_size = r'(\d+)$'
-                # match_size = re.search(pattern_size, line)
-                # file_size = int(match_size.group(1))
+                try:
+                    pattern_size = r'(\d+)$'
+                    match_size = re.search(pattern_size, line)
+                    file_size = int(match_size.group(1))
 
-                # total_size += file_size
+                    total_size += file_size
                 continue
 
             status_code = int(match_status.group(1))
