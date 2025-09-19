@@ -26,13 +26,14 @@ def main():
             # Find the status code in the line
             pattern_status = r'(\d{3}) \d+'
             match_status = re.search(pattern_status, line)
-            if not match_status:
-                print(line)
-                try:
-                    pattern_size = r'(\d+)$'
-                    match_size = re.search(pattern_size, line)
-                    file_size = int(match_size.group(1))
 
+            if not match_status:
+                print("This is the debug line:")
+                print(line)
+                pattern_size = r'(\d+)$'
+                match_size = re.search(pattern_size, line)
+                if match_size:
+                    file_size = int(match_size.group(1))
                     total_size += file_size
                 continue
 
