@@ -19,22 +19,19 @@ def main():
     total_size = 0
     valid_line_count = 0
 
-    # Strict log line format
-    log_pattern = re.compile(
-        r'^\d{1,3}(?:\.\d{1,3}){3} - \['
-        r'\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\.\d+'
-        r'\] "GET /projects/260 HTTP/1\.1" (\d{3}) (\d+)$'
-    )
-
     try:
         for line in sys.stdin:
             line = line.strip()
-            match = log_pattern.match(line)
-            if not match:
-                continue  # Skip invalid lines
 
-            status_code = int(match.group(1))
-            file_size = int(match.group(2))
+            # Find the status code in the line
+            pattern_status = r'(\d{3}) \d+'
+            match_status = re.search(pattern_status, line)
+            status_code = int(match_status.group(1))
+
+            # Find the size in the line
+            pattern_size = r'\d{3} (\d+)'
+            match_size = re.search(pattern_size, line)
+            file_size = int(match_size.group(1))
 
             total_size += file_size
             if status_code in status_codes:
