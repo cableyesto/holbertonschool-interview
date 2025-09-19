@@ -22,6 +22,12 @@ def main():
     try:
         for line in sys.stdin:
             line = line.strip()
+            # Find the size in the line
+            pattern_size = r'\d{3} (\d+)'
+            match_size = re.search(pattern_size, line)
+            file_size = int(match_size.group(1))
+
+            total_size += file_size
 
             # Find the status code in the line
             pattern_status = r'(\d{3}) \d+'
@@ -29,13 +35,6 @@ def main():
             if not match_status:
                 continue
             status_code = int(match_status.group(1))
-
-            # Find the size in the line
-            pattern_size = r'\d{3} (\d+)'
-            match_size = re.search(pattern_size, line)
-            file_size = int(match_size.group(1))
-
-            total_size += file_size
             if status_code in status_codes:
                 status_codes[status_code] += 1
 
