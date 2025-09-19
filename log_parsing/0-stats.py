@@ -28,8 +28,6 @@ def main():
             match_status = re.search(pattern_status, line)
 
             if not match_status:
-                print("This is the debug line:")
-                print(line)
                 pattern_size = r'(\d+)$'
                 match_size = re.search(pattern_size, line)
                 if match_size:
