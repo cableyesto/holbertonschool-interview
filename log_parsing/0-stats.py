@@ -28,6 +28,10 @@ def main():
             match_status = re.search(pattern_status, line)
             status_code = int(match_status.group(1))
 
+            if not status_code:
+                continue
+
+
             # Find the size in the line
             pattern_size = r'\d{3} (\d+)'
             match_size = re.search(pattern_size, line)
