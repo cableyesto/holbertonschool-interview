@@ -27,6 +27,7 @@ def main():
             pattern_status = r'(\d{3}) \d+'
             match_status = re.search(pattern_status, line)
             if not match_status:
+                print(line)
                 pattern_size = r'(\d+)$'
                 match_size = re.search(pattern_size, line)
                 file_size = int(match_size.group(1))
