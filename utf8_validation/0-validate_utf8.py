@@ -44,9 +44,11 @@ def validUTF8(data):
         if last_eight_bits >= 224 and byte <= 239:
             number_three_bytes += 1
             list_idx_three_bytes.append(idx)
-        if last_eight_bits >= 240:
+        if last_eight_bits >= 240 and byte <= 247:
             number_four_bytes += 1
             list_idx_four_bytes.append(idx)
+        if last_eight_bits >= 248:
+            return False  # Invalid UTF-8 no 5 bytes encoding
 
     # Check if the array given is filled only with bytes lower than 127
     # so in UTF-8 it is encoded with only one byte
