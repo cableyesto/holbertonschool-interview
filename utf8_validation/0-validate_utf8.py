@@ -29,13 +29,13 @@ def validUTF8(data):
     for idx, byte in enumerate(data):
         if byte <= 127:
             number_single_bytes += 1
-        elif byte >= 128 and byte <= 2047:
+        if byte >= 128 and byte <= 2047:
             number_two_bytes += 1
             list_idx_two_bytes.append(idx)
-        elif byte >= 2048 and byte <= 65535:
+        if byte >= 2048 and byte <= 65535:
             number_three_bytes += 1
             list_idx_three_bytes.append(idx)
-        elif byte >= 65536 and byte <= 1114111:
+        if byte >= 65536 and byte <= 1114111:
             number_four_bytes += 1
             list_idx_four_bytes.append(idx)
 
@@ -45,7 +45,11 @@ def validUTF8(data):
         return True
     # Verify for two bytes
     for idx_start in list_idx_two_bytes:
-        for i in range(2):
+        if idx_start + 2 > size_array:
+            return False
+        if idx_start < idx_start + 2:
+            continue
+        for i in range(1, 3):
             if data[idx_start + i] > 192:
                 return False
-        return True
+    return True
