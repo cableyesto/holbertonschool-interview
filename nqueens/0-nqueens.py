@@ -41,5 +41,5 @@ def solve_nqueens(n):
 
     backtrack(0, [])
 
-# Run the solver
+
 solve_nqueens(N)
