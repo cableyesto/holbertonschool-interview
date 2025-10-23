@@ -76,35 +76,36 @@ int slide_line(int *line, size_t size, int direction)
 		{
 			if (line[i] == 0)
 			{
-				size_t idx_first_non_zero = i;
+				int idx_first_non_zero = (int) i;
 
 				do {
 					idx_first_non_zero--;
 				} while (line[idx_first_non_zero] == 0 && idx_first_non_zero > 0);
 
-				size_t idx_second_non_zero = idx_first_non_zero;
+				int idx_second_non_zero = idx_first_non_zero;
 
 				do {
 					idx_second_non_zero--;
 				} while (line[idx_second_non_zero] == 0 && idx_first_non_zero > 0);
 
-				// printf("Non null idx 1: %ld\n", idx_first_non_zero);
-				// printf("Non null idx 2: %ld\n", idx_second_non_zero);
-				// if (idx_first_non_zero == 0)
-				// 	break;
-
-				// line[i] = line[idx_first_non_zero] + line[idx_second_non_zero];
-				// line[idx_first_non_zero] = 0;
-				// line[idx_second_non_zero] = 0;
-				if (idx_second_non_zero <= 0 && idx_first_non_zero == 0)
+				if (idx_second_non_zero < 0 || idx_first_non_zero == 0)
 				{
 					line[i] = line[idx_first_non_zero];
 					line[idx_first_non_zero] = 0;
 				} else
 				{
-					line[i] = line[idx_first_non_zero] + line[idx_second_non_zero];
-					line[idx_first_non_zero] = 0;
-					line[idx_second_non_zero] = 0;
+					int next_first = line[idx_first_non_zero];
+					int next_second = line[idx_second_non_zero];
+					if (next_first == next_second)
+					{
+						line[i] =  next_first + next_second;
+						line[idx_first_non_zero] = 0;
+						line[idx_second_non_zero] = 0;
+					} else
+					{
+						line[i] =  next_first;
+						line[idx_first_non_zero] = 0;
+					}
 				}
 			} else
 			{
@@ -123,9 +124,6 @@ int slide_line(int *line, size_t size, int direction)
 					line[idx] = 0;
 				}
 			}
-			// for (size_t k = 0; k < size; k++)
-			// 	printf("%d ", line[k]);
-			// printf("\n");
 		}
 	}
 	return (1);
