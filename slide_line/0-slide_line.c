@@ -114,9 +114,9 @@ int slide_line(int *line, size_t size, int direction)
 				line[i] = merge;
 				line[idx] = 0;
 			}
-			for (size_t k = 0; k < size; k++)
-				printf("%d ", line[k]);
-			printf("\n");
+			// for (size_t k = 0; k < size; k++)
+			// printf("%d ", line[k]);
+			// printf("\n");
 		}
 	}
 	return (1);
