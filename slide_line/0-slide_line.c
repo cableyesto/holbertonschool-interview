@@ -60,10 +60,12 @@ int slide_line(int *line, size_t size, int direction)
 
 				int cur = line[i];
 				int next = line[idx];
-				int merge = next + cur;
-
-				line[i] = merge;
-				line[idx] = 0;
+				if (cur == next) 
+				{
+					int merge = next + cur;
+					line[i] = merge;
+					line[idx] = 0;
+				}
 			}
 		}
 	}
@@ -109,10 +111,12 @@ int slide_line(int *line, size_t size, int direction)
 
 				int cur = line[i];
 				int next = line[idx];
-				int merge = next + cur;
-
-				line[i] = merge;
-				line[idx] = 0;
+				if (cur == next) 
+				{
+					int merge = next + cur;
+					line[i] = merge;
+					line[idx] = 0;
+				}
 			}
 			// for (size_t k = 0; k < size; k++)
 			// printf("%d ", line[k]);
