@@ -11,10 +11,10 @@ const options = {
 function getNameForThisCharacter (url) {
   const optionsBis = {
     method: 'GET',
-    url: url
+    url
   };
 
-  let promise = new Promise(function (resolve, reject) {
+  const promise = new Promise(function (resolve, reject) {
     try {
       request(optionsBis, function (error, response, body) {
         if (!error) {
@@ -33,9 +33,9 @@ function getNameForThisCharacter (url) {
 async function processCharacters (arrCharactersURL) {
   const numCharacters = arrCharactersURL.length;
   for (let i = 0; i < numCharacters; i++) {
-    let url = arrCharactersURL[i];
+    const url = arrCharactersURL[i];
     try {
-      let name = await getNameForThisCharacter(url);
+      const name = await getNameForThisCharacter(url);
       console.log(name);
     } catch (error) {
       console.error('Error from await function:', error);
