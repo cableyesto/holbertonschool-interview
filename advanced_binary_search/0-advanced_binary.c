@@ -44,11 +44,11 @@ int binary_recursive(int *array, size_t left, size_t right, int value)
 	{
 		if (mid == left || array[mid - 1] != value)
 			return (mid);
-		return (binary_recursive(array, left, mid - 1, value));
+		return (binary_recursive(array, left, mid, value));
 	}
 
 	if (array[mid] > value)
-		return (binary_recursive(array, left, mid - 1, value));
+		return (binary_recursive(array, left, mid, value));
 
 	return (binary_recursive(array, mid + 1, right, value));
 }
