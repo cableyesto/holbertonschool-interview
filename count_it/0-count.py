@@ -4,8 +4,8 @@
 Counts occurrences of keywords in hot posts of a subreddit recursively.
 """
 
-import requests
 import re
+import requests
 from collections import defaultdict
 
 
