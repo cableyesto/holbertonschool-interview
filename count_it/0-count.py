@@ -4,9 +4,9 @@
 Counts occurrences of keywords in hot posts of a subreddit recursively.
 """
 
+from collections import defaultdict
 import re
 import requests
-from collections import defaultdict
 
 
 def count_words(subreddit, word_list, after=None, counts=None):
