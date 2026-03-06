@@ -3,8 +3,8 @@
 
 void print_array(const int *array, size_t size);
 
-static int get_max(int *array, size_t size);
-static void counting_sort_digit(int *array, size_t size, int exp, int *output);
+int get_max(int *array, size_t size);
+void counting_sort_digit(int *array, size_t size, int exp, int *output);
 void radix_sort(int *array, size_t size);
 
 #endif /* SORT_H */

@@ -8,7 +8,7 @@
  *
  * Return: maximum value
  */
-static int get_max(int *array, size_t size)
+int get_max(int *array, size_t size)
 {
 	size_t i;
 	int max;
@@ -31,7 +31,7 @@ static int get_max(int *array, size_t size)
  * @exp: current digit exponent
  * @output: temporary array
  */
-static void counting_sort_digit(int *array, size_t size, int exp, int *output)
+void counting_sort_digit(int *array, size_t size, int exp, int *output)
 {
 	int count[10] = {0};
 	int i;
